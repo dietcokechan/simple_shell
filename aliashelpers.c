@@ -39,7 +39,7 @@ int _checkalias(char **args, alias *alias_ptr)
 		if (_strcmp(*args, alias_ptr->name, MATCH) == TRUE)
 		{
 			*args = _strdup(alias_ptr->value);
-			return (-EXECVE);
+			return (EXECVE);
 		}
 		alias_ptr = alias_ptr->next;
 	}
