@@ -74,6 +74,7 @@ int _printalias(alias *alias_ptr)
 int _printaliasval(char *arg, alias *alias_ptr)
 {
 	int status;
+	
 	while (alias_ptr != NULL)
 	{
 		fflush(stdin);

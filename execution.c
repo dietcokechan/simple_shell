@@ -117,7 +117,7 @@ int _builtins(char **args)
 	else if (_strcmp("env", *args, MATCH) == TRUE)
 		return (_printenv());
 
-	return (EXECVE);
+	return (-EXECVE);
 }
 
 /**
