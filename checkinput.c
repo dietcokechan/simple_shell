@@ -24,7 +24,7 @@ char *_saninput(char *old_buf, size_t *old_size)
 		while (*old_ptr == ' ')
 			old_ptr++;
 		while (*old_ptr	!= ' ' && *old_ptr != ';' && *old_ptr != '|'
-		       && *old_ptr != '&' && *old_ptr != '\0')
+			   && *old_ptr != '&' && *old_ptr != '\0')
 		{
 			*new_ptr = *old_ptr;
 			new_ptr++;

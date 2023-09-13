@@ -22,7 +22,7 @@ int _cmdmanager(char **args)
 	while (*args != NULL && prev_eval != EXIT_SH)
 	{
 		while (*args_ptr != NULL && **args_ptr != '&'
-		       && **args_ptr != '|')
+			   && **args_ptr != '|')
 			args_ptr++;
 
 		if (_strcmp(*args_ptr, "||", MATCH) == TRUE)
@@ -81,18 +81,18 @@ int _builtins(char **args)
 			break;
 		}
 		if (_strcmp("~", *args_ptr, MATCH) == TRUE
-		    && _getarrelement(environ, "HOME=") != NULL)
+			&& _getarrelement(environ, "HOME=") != NULL)
 		{
 			*args_ptr = _strdup(_getarrelement
 					(environ, "HOME=") + 5);
 			continue;
 		}
 		if (_strcmp("~/", *args_ptr, PREFIX) == TRUE
-		    && _getarrelement(environ, "HOME=") != NULL)
+			&& _getarrelement(environ, "HOME=") != NULL)
 		{
 			*args_ptr = _strconcat(_getarrelement
-					       (environ, "HOME=")
-					       + 5, *args_ptr + 1);
+						   (environ, "HOME=")
+						   + 5, *args_ptr + 1);
 		}
 		*args_ptr = _checkvars(*args_ptr);
 

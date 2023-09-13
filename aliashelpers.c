@@ -59,7 +59,7 @@ int _printalias(alias *alias_ptr)
 		write(STDOUT_FILENO, alias_ptr->name, _strlen(alias_ptr->name));
 		write(STDOUT_FILENO, "=\'", 2);
 		write(STDOUT_FILENO, alias_ptr->value,
-		      _strlen(alias_ptr->value));
+			  _strlen(alias_ptr->value));
 		write(STDOUT_FILENO, "\'\n", 2);
 		alias_ptr = alias_ptr->next;
 	}
@@ -83,7 +83,7 @@ int _printaliasval(char *arg, alias *alias_ptr)
 			write(STDOUT_FILENO, arg, _strlen(arg));
 			write(STDOUT_FILENO, "=\'", 2);
 			write(STDOUT_FILENO, alias_ptr->value,
-			      _strlen(alias_ptr->value));
+				  _strlen(alias_ptr->value));
 			write(STDOUT_FILENO, "\'\n", 2);
 			return (TRUE);
 		}
@@ -109,7 +109,7 @@ int _printaliasval(char *arg, alias *alias_ptr)
 int _setaliasval(char *arg, alias *alias_ptr, char *new_value)
 {
 	while (alias_ptr->next != NULL
-	       && _strcmp(alias_ptr->name, arg, MATCH) != TRUE)
+		   && _strcmp(alias_ptr->name, arg, MATCH) != TRUE)
 	{
 		alias_ptr = alias_ptr->next;
 	}
