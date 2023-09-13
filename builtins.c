@@ -1,7 +1,5 @@
 #include "shell.h"
 
-int status;
-
 /**
  * _setenv - sets and environmental variable
  * @name: name of the variable
@@ -104,7 +102,6 @@ int _cd(char *name)
 	int i;
 
 	getcwd(old_path_buffer, buf_size);
-
 	if (name == NULL)
 	{
 		home = _getarrelement(environ, "HOME=");
@@ -114,9 +111,7 @@ int _cd(char *name)
 			_errormsg("cd", name);
 			return (SKIP);
 		}
-
 		home += 5;
-
 		i = chdir((const char *)home);
 		if (i != -1)
 			_setenv("PWD", (const char *)home);
@@ -130,9 +125,7 @@ int _cd(char *name)
 			_errormsg("cd", name);
 			return (SKIP);
 		}
-
 		pwd += 7;
-
 		i = chdir((const char *)pwd);
 		if (i != -1)
 		{
@@ -153,10 +146,8 @@ int _cd(char *name)
 		_errormsg("cd", name);
 		return (SKIP);
 	}
-
 	status = 0;
 	_setenv("OLDPWD", (const char *)old_path_buffer);
-
 	return (SKIP);
 }
 

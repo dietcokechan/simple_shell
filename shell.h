@@ -42,7 +42,7 @@ extern int line_num;
 
 extern char *_shellname;
 
-void _mainloop();
+void _mainloop(void);
 int _cmdmanager(char **args);
 int _builtins(char **args);
 int and_or(char **args, char operator, int last_compare);

@@ -41,18 +41,14 @@ char **_makearray(char *str, char delim, char **if_sep)
 			break;
 		if (*str_ptr == delim && *(str_ptr + 1) != '\0')
 			i++;
-
 		str_ptr++;
 	}
-
 	arr = malloc(i * sizeof(char **));
 	if (arr == NULL)
 		exit(EXIT_FAILURE);
-
 	arr[0] = str;
 	str_ptr = str;
 	i = 1;
-
 	while (*str_ptr != '\0')
 	{
 		if (*str_ptr == delim)
@@ -75,7 +71,6 @@ char **_makearray(char *str, char delim, char **if_sep)
 		str_ptr++;
 	}
 	arr[i] = NULL;
-
 	return (arr);
 }
 

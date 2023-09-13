@@ -21,27 +21,23 @@ char *_itoa(int n)
 		n = INT_MAX;
 		is_min = TRUE;
 	}
-
 	if (n < 0)
 	{
 		*ptr = '-';
 		ptr++;
 		n = -n;
 	}
-
 	while (i_mask > 9 && digit == 0)
 	{
 		digit = n / i_mask;
 		n %= i_mask;
 		i_mask /= 10;
 	}
-
 	if (digit != 0)
 	{
 		*ptr = digit + '0';
 		ptr++;
 	}
-
 	while (i_mask > 9)
 	{
 		digit = n / i_mask;
@@ -50,10 +46,8 @@ char *_itoa(int n)
 		n %= i_mask;
 		i_mask /= 10;
 	}
-
 	if (is_min == TRUE)
 		n += 1;
-
 	*ptr = n + '0';
 	ptr++;
 	*ptr = '\0';
@@ -77,7 +71,6 @@ int _atoi(char *s)
 		sign = -1;
 		s++;
 	}
-
 	while (*s != '\0')
 	{
 		if (*s >= '0' && *s <= '9')
@@ -92,6 +85,5 @@ int _atoi(char *s)
 			return (-1);
 		s++;
 	}
-
 	return (n);
 }

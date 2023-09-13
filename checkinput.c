@@ -1,11 +1,5 @@
 #include "shell.h"
 
-int status;
-
-int line_num;
-
-char *_shellname;
-
 /**
  * _saninput - sanitizes input from the command line
  * @old_buf: buffer to be sanitized
@@ -37,7 +31,6 @@ char *_saninput(char *old_buf, size_t *old_size)
 			*new_ptr = ' ';
 			new_ptr++;
 		}
-
 		if (*old_ptr == ';' || *old_ptr == '|' || *old_ptr == '&')
 		{
 			if (_checkinput(old_ptr) == FALSE)

@@ -1,7 +1,5 @@
 #include "shell.h"
 
-char *_shellname = NULL;
-
 /**
  * main - executes commands from the terminal
  * @argc: number of inputs from main
@@ -11,6 +9,7 @@ char *_shellname = NULL;
  */
 int main(__attribute__((unused))int argc, char **argv)
 {
+	_shellname = NULL;
 	_shellname = _strdup(*argv);
 
 	environ = _arrcpy(environ, _listlen(environ, NULL));

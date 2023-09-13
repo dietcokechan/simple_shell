@@ -1,7 +1,5 @@
 #include "shell.h"
 
-int status;
-
 /**
  * _freealias - frees all aliases
  * @alias_ptr: ptr to head of alias list
@@ -39,7 +37,7 @@ int _checkalias(char **args, alias *alias_ptr)
 		if (_strcmp(*args, alias_ptr->name, MATCH) == TRUE)
 		{
 			*args = _strdup(alias_ptr->value);
-			return (EXECVE);
+			return (-EXECVE);
 		}
 		alias_ptr = alias_ptr->next;
 	}
@@ -75,6 +73,7 @@ int _printalias(alias *alias_ptr)
  */
 int _printaliasval(char *arg, alias *alias_ptr)
 {
+	int status;
 	while (alias_ptr != NULL)
 	{
 		fflush(stdin);

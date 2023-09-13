@@ -1,9 +1,5 @@
 #include "shell.h"
 
-int status;
-
-char *_shellname;
-
 /**
  * _cmdmanager - manages the process a command goes through to get executed
  * @args: command and arguments
@@ -46,7 +42,6 @@ int _cmdmanager(char **args)
 		prev_op = next_op;
 		args = args_ptr;
 	}
-
 	if (next_op == 'c')
 	{
 		whichcmd = _execmd(args);
@@ -54,10 +49,8 @@ int _cmdmanager(char **args)
 		if (whichcmd == EXIT_SH)
 			return (EXIT_SH);
 	}
-
 	if (no_err == FALSE || whichcmd == FALSE)
 		return (FALSE);
-
 	return (TRUE);
 }
 
@@ -95,16 +88,13 @@ int _builtins(char **args)
 						   + 5, *args_ptr + 1);
 		}
 		*args_ptr = _checkvars(*args_ptr);
-
 		args_ptr++;
 	}
 	if (*args == NULL)
 		return (SKIP);
-
 	i = _aliasfunc(args, FALSE);
 	if (i == EXECVE || i == SKIP)
 		return (i);
-
 	if (_strcmp("exit", *args, MATCH) == TRUE && args[1] != NULL)
 	{
 		status = _atoi(args[1]);
@@ -149,7 +139,6 @@ int and_or(char **args, char operator, int last_compare)
 			return (EXIT_SH);
 		if (i == TRUE)
 			return (TRUE);
-
 		return (FALSE);
 	}
 	if (last_compare == TRUE && operator == '&')
@@ -159,10 +148,8 @@ int and_or(char **args, char operator, int last_compare)
 			return (EXIT_SH);
 		if (i == TRUE)
 			return (TRUE);
-
 		return (FALSE);
 	}
-
 	if (last_compare == FALSE && operator == '|')
 	{
 		i = _execmd(args);
@@ -170,13 +157,10 @@ int and_or(char **args, char operator, int last_compare)
 			return (EXIT_SH);
 		if (i == TRUE)
 			return (TRUE);
-
 		return (FALSE);
 	}
-
 	if (last_compare == TRUE && operator == '|')
 		return (TRUE);
-
 	return (FALSE);
 }
 
@@ -188,7 +172,7 @@ int and_or(char **args, char operator, int last_compare)
  */
 char *_checkcmd(char **args)
 {
-	char *command_buf;
+	char *cmd_buf;
 	char *full_buf;
 	char *path_str = NULL;
 	char *path_ptr;
@@ -198,25 +182,23 @@ char *_checkcmd(char **args)
 
 	if (access(*args, X_OK) == 0)
 		return (_strdup(*args));
-
 	if (_getarrelement(environ, "PATH=") != NULL)
 		path_str = _strdup(_getarrelement(environ, "PATH=") + 5);
-
 	path_ptr = path_str;
 
 	if (path_str != NULL)
 	{
 		if (*path_str == ':')
 		{
-			command_buf = _strconcat("./", *args);
-			if (access(command_buf, X_OK) == 0)
+			cmd_buf = _strconcat("./", *args);
+			if (access(cmd_buf, X_OK) == 0)
 			{
 				free(path_str);
-				return (command_buf);
+				return (cmd_buf);
 			}
 			else
 			{
-				free(command_buf);
+				free(cmd_buf);
 				path_ptr = _strdup(path_str + 1);
 				free(path_str);
 				path_str = path_ptr;
@@ -238,24 +220,20 @@ char *_checkcmd(char **args)
 	}
 	if (path_str != NULL)
 		path_var = _makearray(path_str, ':', NULL);
-
 	path_var_ptr = path_var;
-
-	command_buf = _strconcat("/", *args);
-
-	full_buf = _strdup(command_buf);
-
+	cmd_buf = _strconcat("/", *args);
+	full_buf = _strdup(cmd_buf);
 	if (path_var != NULL)
 	{
 		while (*path_var_ptr != NULL && access(full_buf, X_OK) != 0)
 		{
 			free(full_buf);
-			full_buf = _strconcat(*path_var_ptr, command_buf);
+			full_buf = _strconcat(*path_var_ptr, cmd_buf);
 			path_var_ptr++;
 		}
 	}
 
-	free(command_buf);
+	free(cmd_buf);
 	free(path_str);
 	free(path_var);
 
@@ -265,7 +243,6 @@ char *_checkcmd(char **args)
 		free(full_buf);
 		return (NULL);
 	}
-
 	return (full_buf);
 }
 
@@ -287,7 +264,6 @@ int _execmd(char **args)
 		cmd_name = _checkcmd(args);
 		if (cmd_name == NULL)
 			return (FALSE);
-
 		pid = fork();
 		if (pid == -1)
 		{
@@ -307,7 +283,6 @@ int _execmd(char **args)
 
 	if (_strcmp("false", *args, MATCH) == TRUE)
 		status = 1;
-
 	if (*args != buf_ptr)
 		free(*args);
 	args++;
@@ -322,15 +297,11 @@ int _execmd(char **args)
 
 		if (*args != buf_ptr)
 			free(*args);
-
 		args++;
 	}
-
 	if (whichcmd == EXIT_SH)
 		return (EXIT_SH);
-
 	if (status != 0)
 		return (FALSE);
-
 	return (TRUE);
 }
