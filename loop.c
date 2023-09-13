@@ -1,12 +1,15 @@
 #include "shell.h"
 
+int status = 0;
+int line_num = 1;
+
 /**
  * _mainloop - main loop for shell
  * Return: nothing
  */
 void _mainloop(void)
 {
-	int bytes_read, is_separated = FALSE, i, status = 0, line_num = 1;
+	int bytes_read, is_separated = FALSE, i, line_num = 1;
 	size_t buf_size = 1;
 	char *buf = NULL, *buf_ptr, *buf_tmp;
 	char **args = NULL;

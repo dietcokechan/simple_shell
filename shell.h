@@ -35,11 +35,8 @@ typedef struct Alias
 } alias;
 
 extern char **environ;
-
 extern int status;
-
 extern int line_num;
-
 extern char *_shellname;
 
 void _mainloop(void);

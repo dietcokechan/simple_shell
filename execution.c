@@ -1,5 +1,8 @@
 #include "shell.h"
 
+int status;
+char *_shellname;
+
 /**
  * _cmdmanager - manages the process a command goes through to get executed
  * @args: command and arguments
@@ -64,7 +67,7 @@ int _cmdmanager(char **args)
 int _builtins(char **args)
 {
 	char **args_ptr = args;
-	int i;
+	int i, status;
 
 	while (*args_ptr != NULL)
 	{
@@ -257,6 +260,7 @@ int _execmd(char **args)
 	char *buf_ptr = *args;
 	char *cmd_name;
 	pid_t pid;
+	int status;
 	int whichcmd = _builtins(args);
 
 	if (whichcmd == EXECVE)
