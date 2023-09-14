@@ -222,13 +222,3 @@ int _printenv(void)
 
 	return (SKIP);
 }
-
-/**
- * _myexit - exit builtin
- * @status: exit status
- * Return: status
- */
-int _myexit(int status)
-{
-	exit(status);
-}

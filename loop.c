@@ -26,7 +26,7 @@ void _mainloop(void)
 		{
 			if (isatty(STDIN_FILENO) == 1)
 				write(STDOUT_FILENO, "($) ", 10);
-			bytes_read = getline(&buf, &buf_size, stdin);
+			bytes_read = _getline(&buf, &buf_size, stdin);
 			if (bytes_read == -1)
 				break;
 			if (bytes_read == 1)
