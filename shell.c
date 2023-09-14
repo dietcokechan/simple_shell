@@ -1,5 +1,6 @@
 #include "shell.h"
 
+int status;
 char *_shellname = NULL;
 
 /**
@@ -11,7 +12,6 @@ char *_shellname = NULL;
  */
 int main(__attribute__((unused))int argc, char **argv)
 {
-	int status = 0;
 	char *_shellname = NULL;
 	_shellname = _strdup(*argv);
 
@@ -24,5 +24,5 @@ int main(__attribute__((unused))int argc, char **argv)
 	_freearr(environ);
 	free(_shellname);
 
-	return (status % 256);
+	return (status);
 }

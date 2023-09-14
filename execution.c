@@ -109,7 +109,7 @@ int _builtins(char **args)
 		}
 	}
 	if (_strcmp("exit", *args, MATCH) == TRUE)
-		return (EXIT_SH);
+		return (_myexit(status));
 	else if (_strcmp("setenv", *args, MATCH) == TRUE && args[1] != NULL)
 		return (_setenv(args[1], args[2]));
 	else if (_strcmp("unsetenv", *args, MATCH) == TRUE
@@ -259,8 +259,6 @@ int _execmd(char **args)
 {
 	char *buf_ptr = *args;
 	char *cmd_name;
-	pid_t pid;
-	int status;
 	int whichcmd = _builtins(args);
 
 	if (whichcmd == EXECVE)
@@ -268,23 +266,14 @@ int _execmd(char **args)
 		cmd_name = _checkcmd(args);
 		if (cmd_name == NULL)
 			return (FALSE);
-		pid = fork();
-		if (pid == -1)
-		{
-			exit(EXIT_FAILURE);
-		}
-		if (pid == 0)
-		{
-			execve(cmd_name, args, environ);
-			exit(EXIT_FAILURE);
-		}
+		
+		pipedsys(args, cmd_name);
 		wait(&status);
 		free(cmd_name);
 		fflush(stdin);
 		if (status != 0)
-		status = 2;
+			status = 2;
 	}
-
 	if (_strcmp("false", *args, MATCH) == TRUE)
 		status = 1;
 	if (*args != buf_ptr)
@@ -308,4 +297,20 @@ int _execmd(char **args)
 	if (status != 0)
 		return (FALSE);
 	return (TRUE);
+}
+
+void pipedsys(char **args, char *cmd_name)
+{
+	pid_t pid;
+	pid = fork();
+
+	if (pid == 0)
+	{
+		execve(cmd_name, args, environ);
+		perror("Error: ");
+	}
+	else if (pid < 0)
+	{
+		perror("Error: ");
+	}
 }

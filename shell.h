@@ -46,6 +46,7 @@ int and_or(char **args, char operator, int last_compare);
 
 char *_checkcmd(char **args);
 int _execmd(char **args);
+void pipedsys(char **args, char *cmd_name);
 
 char *_saninput(char *old_buf, size_t *old_size);
 int _checkinput(char *ptr);
@@ -70,6 +71,7 @@ int _freearr(char **args);
 int _setenv(const char *name, const char *value);
 int _unsetenv(const char *name);
 int _cd(char *name);
+int _myexit(int status);
 
 int _aliasfunc(char **args, int free);
 int _freealias(alias *alias_ptr);

@@ -226,3 +226,9 @@ int _printenv(void)
 
 	return (SKIP);
 }
+
+
+int _myexit(int status)
+{
+	exit(status);
+}

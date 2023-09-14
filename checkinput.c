@@ -177,7 +177,7 @@ char *_checkvars(char *arg)
 				ptr = clone + i;
 			}
 			next = ptr + 1;
-			while (*next != '\0' && *next != '$' && *next != '#')
+			while (*next != '\0' && *next != '#')
 				next++;
 
 			if (*next == '$' && next > ptr + 1)
@@ -193,6 +193,8 @@ char *_checkvars(char *arg)
 				tmp = _itoa(status);
 			else if (_strcmp("$0", ptr, MATCH) == TRUE)
 				tmp = _strdup(_shellname);
+			else if (_strcmp("$$", ptr, MATCH) == TRUE)
+				tmp = _itoa(getpid());
 			else if (_getarrelement(environ, ptr + 1) != NULL)
 			{
 				buffer = _strconcat(ptr + 1, "=");
