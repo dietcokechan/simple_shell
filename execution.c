@@ -12,18 +12,14 @@ char *_shellname;
 int _cmdmanager(char **args)
 {
 	char **args_ptr = args;
-	int prev_eval = NEITHER;
-	int no_err = TRUE;
-	char prev_op = 'c';
-	char next_op = 'c';
-	int whichcmd;
+	int prev_eval = NEITHER, no_err = TRUE, whichcmd;
+	char prev_op = 'c', next_op = 'c';
 
 	while (*args != NULL && prev_eval != EXIT_SH)
 	{
 		while (*args_ptr != NULL && **args_ptr != '&'
 			   && **args_ptr != '|')
 			args_ptr++;
-
 		if (_strcmp(*args_ptr, "||", MATCH) == TRUE)
 		{
 			*args_ptr = NULL;
@@ -38,7 +34,6 @@ int _cmdmanager(char **args)
 		}
 		if (next_op == 'c')
 			break;
-
 		prev_eval = and_or(args, prev_op, prev_eval);
 		if (prev_eval == FALSE)
 			no_err = FALSE;
@@ -48,7 +43,6 @@ int _cmdmanager(char **args)
 	if (next_op == 'c')
 	{
 		whichcmd = _execmd(args);
-
 		if (whichcmd == EXIT_SH)
 			return (EXIT_SH);
 	}
@@ -87,8 +81,7 @@ int _builtins(char **args)
 			&& _getarrelement(environ, "HOME=") != NULL)
 		{
 			*args_ptr = _strconcat(_getarrelement
-						   (environ, "HOME=")
-						   + 5, *args_ptr + 1);
+						   (environ, "HOME=")+ 5, *args_ptr + 1);
 		}
 		*args_ptr = _checkvars(*args_ptr);
 		args_ptr++;
@@ -119,8 +112,7 @@ int _builtins(char **args)
 		return (_cd(args[1]));
 	else if (_strcmp("env", *args, MATCH) == TRUE)
 		return (_printenv());
-
-	return (EXECVE);
+	return (-1);
 }
 
 /**
@@ -175,20 +167,14 @@ int and_or(char **args, char operator, int last_compare)
  */
 char *_checkcmd(char **args)
 {
-	char *cmd_buf;
-	char *full_buf;
-	char *path_str = NULL;
-	char *path_ptr;
-	char *path_tmp;
-	char **path_var = NULL;
-	char **path_var_ptr;
+	char *cmd_buf, *full_buf, *path_str = NULL, *path_ptr, *path_tmp;
+	char **path_var = NULL, **path_var_ptr;
 
 	if (access(*args, X_OK) == 0)
 		return (_strdup(*args));
 	if (_getarrelement(environ, "PATH=") != NULL)
 		path_str = _strdup(_getarrelement(environ, "PATH=") + 5);
 	path_ptr = path_str;
-
 	if (path_str != NULL)
 	{
 		if (*path_str == ':')
@@ -235,11 +221,9 @@ char *_checkcmd(char **args)
 			path_var_ptr++;
 		}
 	}
-
 	free(cmd_buf);
 	free(path_str);
 	free(path_var);
-
 	if (access(full_buf, X_OK) != 0)
 	{
 		_errormsg(args[0], NULL);
@@ -266,7 +250,6 @@ int _execmd(char **args)
 		cmd_name = _checkcmd(args);
 		if (cmd_name == NULL)
 			return (FALSE);
-		
 		pipedsys(args, cmd_name);
 		wait(&status);
 		free(cmd_name);
@@ -297,20 +280,4 @@ int _execmd(char **args)
 	if (status != 0)
 		return (FALSE);
 	return (TRUE);
-}
-
-void pipedsys(char **args, char *cmd_name)
-{
-	pid_t pid;
-	pid = fork();
-
-	if (pid == 0)
-	{
-		execve(cmd_name, args, environ);
-		perror("Error: ");
-	}
-	else if (pid < 0)
-	{
-		perror("Error: ");
-	}
 }

@@ -8,11 +8,8 @@
  */
 char *_itoa(int n)
 {
-	char *buf = malloc(12);
-	char *ptr = buf;
-	int is_min = FALSE;
-	int i_mask = 1000000000;
-	int digit = 0;
+	char *buf = malloc(12), *ptr = buf;
+	int is_min = FALSE, i_mask = 1000000000, digit = 0;
 
 	if (n == INT_MIN)
 	{

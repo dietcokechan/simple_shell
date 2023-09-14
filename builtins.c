@@ -169,15 +169,12 @@ int _aliasfunc(char **args, int to_free)
 
 	if (to_free == TRUE)
 		return (_freealias(head.next));
-
 	if (_strcmp("alias", *args, MATCH) != TRUE)
 		return (_checkalias(args, head.next));
-
 	args++;
 
 	if (*args == NULL)
 		return (_printalias(head.next));
-
 	while (*args != NULL)
 	{
 		char_ptr = *args;
@@ -198,10 +195,9 @@ int _aliasfunc(char **args, int to_free)
 		}
 		args++;
 	}
-
+	
 	if (no_error == FALSE)
 		return (SKIP);
-
 	status = 0;
 	return (SKIP);
 }
@@ -225,10 +221,4 @@ int _printenv(void)
 	status = 0;
 
 	return (SKIP);
-}
-
-
-int _myexit(int status)
-{
-	exit(status);
 }

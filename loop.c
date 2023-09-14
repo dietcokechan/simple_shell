@@ -17,7 +17,6 @@ void _mainloop(void)
 	buf = malloc(1);
 	if (buf == NULL)
 		exit(EXIT_FAILURE);
-
 	while (1)
 	{
 		if (is_separated == FALSE)
@@ -25,7 +24,6 @@ void _mainloop(void)
 			if (isatty(STDIN_FILENO) == 1)
 				write(STDOUT_FILENO, ":", 10);
 			bytes_read = getline(&buf, &buf_size, stdin);
-
 			if (bytes_read == -1)
 				break;
 			if (bytes_read == 1)
@@ -50,7 +48,6 @@ void _mainloop(void)
 			is_separated = TRUE;
 		else
 			is_separated = FALSE;
-
 		i = _cmdmanager(args);
 		free(args);
 		if (is_separated == FALSE)
