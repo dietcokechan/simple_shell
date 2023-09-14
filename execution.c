@@ -241,6 +241,7 @@ char *_checkcmd(char **args)
  */
 int _execmd(char **args)
 {
+	pid_t pid;
 	char *buf_ptr = *args;
 	char *cmd_name;
 	int whichcmd = _builtins(args);
@@ -250,7 +251,16 @@ int _execmd(char **args)
 		cmd_name = _checkcmd(args);
 		if (cmd_name == NULL)
 			return (FALSE);
-		pipedsys(args, cmd_name);
+		pid = fork();
+		if (pid == 0)
+		{
+			execve(cmd_name, args, environ);
+			perror("Error: ");
+		}
+		else if (pid < 0)
+		{
+			perror("Error: ");
+		}
 		wait(&status);
 		free(cmd_name);
 		fflush(stdin);
