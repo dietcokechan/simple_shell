@@ -112,7 +112,7 @@ int _builtins(char **args)
 		return (_cd(args[1]));
 	else if (_strcmp("env", *args, MATCH) == TRUE)
 		return (_printenv());
-	return (-1);
+	return (EXECVE);
 }
 
 /**

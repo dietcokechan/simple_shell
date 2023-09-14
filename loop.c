@@ -9,7 +9,10 @@ int line_num = 1;
  */
 void _mainloop(void)
 {
-	int bytes_read, is_separated = FALSE, i, line_num = 1;
+	int bytes_read;
+	int is_separated = FALSE;
+	int i;
+	int line_num = 1;
 	size_t buf_size = 1;
 	char *buf = NULL, *buf_ptr, *buf_tmp;
 	char **args = NULL;
@@ -22,7 +25,7 @@ void _mainloop(void)
 		if (is_separated == FALSE)
 		{
 			if (isatty(STDIN_FILENO) == 1)
-				write(STDOUT_FILENO, ":", 10);
+				write(STDOUT_FILENO, "($) ", 10);
 			bytes_read = getline(&buf, &buf_size, stdin);
 			if (bytes_read == -1)
 				break;

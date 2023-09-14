@@ -46,7 +46,6 @@ int and_or(char **args, char operator, int last_compare);
 
 char *_checkcmd(char **args);
 int _execmd(char **args);
-void pipedsys(char **args, char *cmd_name);
 
 char *_saninput(char *old_buf, size_t *old_size);
 int _checkinput(char *ptr);

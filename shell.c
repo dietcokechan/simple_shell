@@ -1,7 +1,7 @@
 #include "shell.h"
 
 int status;
-char *_shellname = NULL;
+char *_shellname;
 
 /**
  * main - executes commands from the terminal
