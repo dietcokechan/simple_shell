@@ -14,6 +14,7 @@ int _setenv(const char *name, const char *value)
 	char *buf_tmp;
 	char *elem_ptr;
 	int len;
+
 	__attribute__((unused))shvars shvars;
 
 	if (value == NULL)
@@ -62,6 +63,7 @@ int _unsetenv(const char *name)
 	char **env_ptr;
 	char *buffer;
 	int len;
+
 	__attribute__((unused))shvars shvars;
 
 	buffer = _strconcat((char *)name, "=");
@@ -102,6 +104,7 @@ int _cd(char *name)
 	char new_path_buffer[PATH_MAX];
 	size_t buf_size = PATH_MAX;
 	int i;
+
 	__attribute__((unused))shvars shvars;
 
 	getcwd(old_path_buffer, buf_size);
@@ -167,6 +170,7 @@ int _aliasfunc(char **args, int to_free)
 	static alias head = {NULL, NULL, NULL};
 	char *char_ptr;
 	int no_error = TRUE;
+
 	__attribute__((unused))shvars shvars;
 
 	if (to_free == TRUE)
@@ -197,7 +201,6 @@ int _aliasfunc(char **args, int to_free)
 		}
 		args++;
 	}
-	
 	if (no_error == FALSE)
 		return (SKIP);
 	shvars.status = 0;
@@ -212,6 +215,7 @@ int _aliasfunc(char **args, int to_free)
 int _printenv(void)
 {
 	char **ptr = environ;
+	
 	__attribute__((unused))shvars shvars;
 
 	while (*ptr != NULL)

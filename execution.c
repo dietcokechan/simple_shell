@@ -79,7 +79,7 @@ int _builtins(char **args)
 			&& _getarrelement(environ, "HOME=") != NULL)
 		{
 			*args_ptr = _strconcat(_getarrelement
-						   (environ, "HOME=")+ 5, *args_ptr + 1);
+						   (environ, "HOME=") + 5, *args_ptr + 1);
 		}
 		*args_ptr = _checkvars(*args_ptr);
 		args_ptr++;
