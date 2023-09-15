@@ -35,10 +35,20 @@ typedef struct Alias
 	struct Alias *next;
 } alias;
 
+/**
+ * struct Shvars - global variables for shell
+ * @status: status
+ * @line_num: line number
+ * @_shellname: shell name
+ */
+typedef struct Shvars
+{
+	int status;
+	int line_num;
+	char *_shellname;
+} shvars;
+
 extern char **environ;
-extern int status;
-extern int line_num;
-extern char *_shellname;
 
 void _mainloop(void);
 

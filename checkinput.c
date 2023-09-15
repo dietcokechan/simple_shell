@@ -1,9 +1,5 @@
 #include "shell.h"
 
-int status;
-int line_num;
-char *_shellname;
-
 /**
  * _saninput - sanitizes input from the command line
  * @old_buf: buffer to be sanitized
@@ -109,16 +105,17 @@ int _checkinput(char *ptr)
  */
 void _errormsg(char *arg0, char *arg1)
 {
-	char *err_str_num = _itoa(line_num);
+	shvars shvars = {0, 0, NULL};
+	char *err_str_num = _itoa(shvars.line_num);
 
-	write(STDERR_FILENO, _shellname, _strlen(_shellname));
+	write(STDERR_FILENO, shvars._shellname, _strlen(shvars._shellname));
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, err_str_num, _strlen(err_str_num));
 	free(err_str_num);
 
 	if (_strcmp("cd", arg0, MATCH) == TRUE)
 	{
-		status = 2;
+		shvars.status = 2;
 		write(STDERR_FILENO, ": cd: can't cd to ", 18);
 		write(STDERR_FILENO, arg1, _strlen(arg1));
 		write(STDERR_FILENO, "\n", 1);
@@ -134,7 +131,7 @@ void _errormsg(char *arg0, char *arg1)
 	}
 	if (*arg0 == ';' || *arg0 == '|' || *arg0 == '&')
 	{
-		status = 2;
+		shvars.status = 2;
 		write(STDERR_FILENO, ": Syntax error: \"", 17);
 		write(STDERR_FILENO, arg0, 1);
 		if (*arg0 == *(arg0 + 1))
@@ -143,7 +140,7 @@ void _errormsg(char *arg0, char *arg1)
 		return;
 	}
 
-	status = 127;
+	shvars.status = 127;
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, arg0, _strlen(arg0));
 	write(STDERR_FILENO, ": not found\n", 12);
@@ -160,11 +157,9 @@ char *_checkvars(char *arg)
 {
 	char *clone = NULL;
 	char *ptr = arg;
-	char *next;
-	char *tmp;
-	char *buffer;
-	int is_var;
-	int i;
+	char *next, *tmp, *buffer;
+	int is_var, i;
+	shvars shvars = {0, 0, NULL};
 
 	while (*ptr != '\0')
 	{
@@ -190,9 +185,9 @@ char *_checkvars(char *arg)
 			*next = '\0';
 
 			if (_strcmp("$?", ptr, MATCH) == TRUE)
-				tmp = _itoa(status);
+				tmp = _itoa(shvars.status);
 			else if (_strcmp("$0", ptr, MATCH) == TRUE)
-				tmp = _strdup(_shellname);
+				tmp = _strdup(shvars._shellname);
 			else if (_strcmp("$$", ptr, MATCH) == TRUE)
 				tmp = _itoa(getpid());
 			else if (_getarrelement(environ, ptr + 1) != NULL)

@@ -1,7 +1,5 @@
 #include "shell.h"
 
-int status;
-
 /**
  * _setenv - sets and environmental variable
  * @name: name of the variable
@@ -16,11 +14,12 @@ int _setenv(const char *name, const char *value)
 	char *buf_tmp;
 	char *elem_ptr;
 	int len;
+	__attribute__((unused))shvars shvars;
 
 	if (value == NULL)
 	{
 		write(STDERR_FILENO, "setenv: no value given\n", 23);
-		status = 2;
+		shvars.status = 2;
 		return (SKIP);
 	}
 
@@ -47,7 +46,7 @@ int _setenv(const char *name, const char *value)
 	free(environ[len]);
 	environ[len] = buffer;
 
-	status = 0;
+	shvars.status = 0;
 
 	return (SKIP);
 }
@@ -63,6 +62,7 @@ int _unsetenv(const char *name)
 	char **env_ptr;
 	char *buffer;
 	int len;
+	__attribute__((unused))shvars shvars;
 
 	buffer = _strconcat((char *)name, "=");
 	len = _listlen(environ, buffer);
@@ -71,7 +71,7 @@ int _unsetenv(const char *name)
 	if (len == -1)
 	{
 		write(STDERR_FILENO, "unsetenv: variable not found\n", 29);
-		status = 2;
+		shvars.status = 2;
 		return (SKIP);
 	}
 
@@ -83,7 +83,7 @@ int _unsetenv(const char *name)
 		env_ptr++;
 	}
 	*env_ptr = NULL;
-	status = 0;
+	shvars.status = 0;
 
 	return (SKIP);
 }
@@ -102,6 +102,7 @@ int _cd(char *name)
 	char new_path_buffer[PATH_MAX];
 	size_t buf_size = PATH_MAX;
 	int i;
+	__attribute__((unused))shvars shvars;
 
 	getcwd(old_path_buffer, buf_size);
 	if (name == NULL)
@@ -109,7 +110,7 @@ int _cd(char *name)
 		home = _getarrelement(environ, "HOME=");
 		if (home == NULL)
 		{
-			status = 2;
+			shvars.status = 2;
 			_errormsg("cd", name);
 			return (SKIP);
 		}
@@ -123,7 +124,7 @@ int _cd(char *name)
 		pwd = _getarrelement(environ, "OLDPWD=");
 		if (pwd == NULL)
 		{
-			status = 2;
+			shvars.status = 2;
 			_errormsg("cd", name);
 			return (SKIP);
 		}
@@ -144,11 +145,11 @@ int _cd(char *name)
 	}
 	if (i == -1)
 	{
-		status = 2;
+		shvars.status = 2;
 		_errormsg("cd", name);
 		return (SKIP);
 	}
-	status = 0;
+	shvars.status = 0;
 	_setenv("OLDPWD", (const char *)old_path_buffer);
 	return (SKIP);
 }
@@ -166,6 +167,7 @@ int _aliasfunc(char **args, int to_free)
 	static alias head = {NULL, NULL, NULL};
 	char *char_ptr;
 	int no_error = TRUE;
+	__attribute__((unused))shvars shvars;
 
 	if (to_free == TRUE)
 		return (_freealias(head.next));
@@ -198,7 +200,7 @@ int _aliasfunc(char **args, int to_free)
 	
 	if (no_error == FALSE)
 		return (SKIP);
-	status = 0;
+	shvars.status = 0;
 	return (SKIP);
 }
 
@@ -210,6 +212,7 @@ int _aliasfunc(char **args, int to_free)
 int _printenv(void)
 {
 	char **ptr = environ;
+	__attribute__((unused))shvars shvars;
 
 	while (*ptr != NULL)
 	{
@@ -218,7 +221,7 @@ int _printenv(void)
 		ptr++;
 	}
 
-	status = 0;
+	shvars.status = 0;
 
 	return (SKIP);
 }

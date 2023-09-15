@@ -1,7 +1,5 @@
 #include "shell.h"
 
-int status;
-
 /**
  * _freealias - frees all aliases
  * @alias_ptr: ptr to head of alias list
@@ -75,6 +73,7 @@ int _printalias(alias *alias_ptr)
  */
 int _printaliasval(char *arg, alias *alias_ptr)
 {
+	__attribute__((unused))shvars shvars;
 	while (alias_ptr != NULL)
 	{
 		fflush(stdin);
@@ -90,7 +89,7 @@ int _printaliasval(char *arg, alias *alias_ptr)
 		alias_ptr = alias_ptr->next;
 	}
 
-	status = 1;
+	shvars.status = 1;
 	write(STDERR_FILENO, "alias: ", 7);
 	write(STDERR_FILENO, arg, _strlen(arg));
 	write(STDERR_FILENO, " not found\n", 11);

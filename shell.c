@@ -1,8 +1,5 @@
 #include "shell.h"
 
-int status;
-char *_shellname;
-
 /**
  * main - executes commands from the terminal
  * @argc: number of inputs from main
@@ -12,9 +9,9 @@ char *_shellname;
  */
 int main(__attribute__((unused))int argc, char **argv)
 {
-	char *_shellname = NULL;
+	shvars shvars = {0, 0, NULL};
 
-	_shellname = _strdup(*argv);
+	shvars._shellname = _strdup(*argv);
 	environ = _arrcpy(environ, _listlen(environ, NULL));
 
 	signal(SIGINT, SIG_IGN);
@@ -22,7 +19,7 @@ int main(__attribute__((unused))int argc, char **argv)
 	_aliasfunc(NULL, TRUE);
 
 	_freearr(environ);
-	free(_shellname);
+	free(shvars._shellname);
 
-	return (status);
+	return (shvars.status);
 }
