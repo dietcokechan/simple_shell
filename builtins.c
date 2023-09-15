@@ -215,7 +215,7 @@ int _aliasfunc(char **args, int to_free)
 int _printenv(void)
 {
 	char **ptr = environ;
-	
+
 	__attribute__((unused))shvars shvars;
 
 	while (*ptr != NULL)
