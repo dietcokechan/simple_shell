@@ -12,10 +12,10 @@ void _mainloop(void)
 	size_t buf_size = 1;
 	char *buf = NULL, *buf_ptr, *buf_tmp;
 	char **args = NULL;
-	shvars shvars;
+	extern int line_num;
 
 	buf = malloc(1);
-	shvars.line_num = 1;
+	line_num = 1;
 	if (buf == NULL)
 		exit(EXIT_FAILURE);
 	while (1)
@@ -29,14 +29,14 @@ void _mainloop(void)
 				break;
 			if (bytes_read == 1)
 			{
-				shvars.line_num++;
+				line_num++;
 				continue;
 			}
 			buf[bytes_read - 1] = '\0';
 			buf = _saninput(buf, &buf_size);
 			if (buf_size == 0)
 			{
-				shvars.line_num++;
+				line_num++;
 				continue;
 			}
 			buf_ptr = buf;
@@ -52,7 +52,7 @@ void _mainloop(void)
 		i = _cmdmanager(args);
 		free(args);
 		if (is_separated == FALSE)
-			shvars.line_num++;
+			line_num++;
 		if (i == EXIT_SH)
 			break;
 	}

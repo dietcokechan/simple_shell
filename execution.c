@@ -59,7 +59,7 @@ int _builtins(char **args)
 {
 	char **args_ptr = args;
 	int i;
-	shvars shvars = {0, 0};
+	extern int status;
 
 	while (*args_ptr != NULL)
 	{
@@ -91,16 +91,16 @@ int _builtins(char **args)
 		return (i);
 	if (_strcmp("exit", *args, MATCH) == TRUE && args[1] != NULL)
 	{
-		shvars.status = _atoi(args[1]);
-		if (shvars.status < 0)
+		status = _atoi(args[1]);
+		if (status < 0)
 		{
-			shvars.status = 2;
+			status = 2;
 			_errormsg(args[0], args[1]);
 			return (SKIP);
 		}
 	}
 	if (_strcmp("exit", *args, MATCH) == TRUE)
-		return (_myexit(shvars.status));
+		return (_myexit(status));
 	else if (_strcmp("setenv", *args, MATCH) == TRUE && args[1] != NULL)
 		return (_setenv(args[1], args[2]));
 	else if (_strcmp("unsetenv", *args, MATCH) == TRUE
@@ -243,7 +243,7 @@ int _execmd(char **args)
 	char *buf_ptr = *args;
 	char *cmd_name;
 	int whichcmd = _builtins(args);
-	shvars shvars = {0, 0};
+	extern int status;
 
 	if (whichcmd == EXECVE)
 	{
@@ -263,14 +263,14 @@ int _execmd(char **args)
 				perror("Error: ");
 			}
 		}
-		wait(&shvars.status);
+		wait(&status);
 		free(cmd_name);
 		fflush(stdin);
-		if (shvars.status != 0)
-			shvars.status = 2;
+		if (status != 0)
+			status = 2;
 	}
 	if (_strcmp("false", *args, MATCH) == TRUE)
-		shvars.status = 1;
+		status = 1;
 	if (*args != buf_ptr)
 		free(*args);
 	args++;
@@ -289,7 +289,7 @@ int _execmd(char **args)
 	}
 	if (whichcmd == EXIT_SH)
 		return (EXIT_SH);
-	if (shvars.status != 0)
+	if (status != 0)
 		return (FALSE);
 	return (TRUE);
 }

@@ -73,7 +73,8 @@ int _printalias(alias *alias_ptr)
  */
 int _printaliasval(char *arg, alias *alias_ptr)
 {
-	__attribute__((unused))shvars shvars;
+	extern int status;
+
 	while (alias_ptr != NULL)
 	{
 		fflush(stdin);
@@ -89,7 +90,7 @@ int _printaliasval(char *arg, alias *alias_ptr)
 		alias_ptr = alias_ptr->next;
 	}
 
-	shvars.status = 1;
+	status = 1;
 	write(STDERR_FILENO, "alias: ", 7);
 	write(STDERR_FILENO, arg, _strlen(arg));
 	write(STDERR_FILENO, " not found\n", 11);

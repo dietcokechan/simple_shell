@@ -9,7 +9,8 @@
  */
 int main(__attribute__((unused))int argc, char **argv)
 {
-	shvars shvars = {0, 0};
+	extern int status;
+
 	_shellname = _strdup(*argv);
 
 	environ = _arrcpy(environ, _listlen(environ, NULL));
@@ -21,5 +22,5 @@ int main(__attribute__((unused))int argc, char **argv)
 	_freearr(environ);
 	free(_shellname);
 
-	return (shvars.status);
+	return (status);
 }
