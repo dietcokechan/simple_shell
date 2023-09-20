@@ -59,7 +59,7 @@ int _builtins(char **args)
 {
 	char **args_ptr = args;
 	int i;
-	shvars shvars = {0, 0, NULL};
+	shvars shvars = {0, 0};
 
 	while (*args_ptr != NULL)
 	{
@@ -243,7 +243,7 @@ int _execmd(char **args)
 	char *buf_ptr = *args;
 	char *cmd_name;
 	int whichcmd = _builtins(args);
-	shvars shvars = {0, 0, NULL};
+	shvars shvars = {0, 0};
 
 	if (whichcmd == EXECVE)
 	{

@@ -105,10 +105,12 @@ int _checkinput(char *ptr)
  */
 void _errormsg(char *arg0, char *arg1)
 {
-	shvars shvars = {0, 0, NULL};
+	shvars shvars = {0, 0};
 	char *err_str_num = _itoa(shvars.line_num);
 
-	write(STDERR_FILENO, shvars._shellname, _strlen(shvars._shellname));
+	extern char *_shellname;
+	
+	write(STDERR_FILENO, _shellname, _strlen(_shellname));
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, err_str_num, _strlen(err_str_num));
 	free(err_str_num);
@@ -159,7 +161,9 @@ char *_checkvars(char *arg)
 	char *ptr = arg;
 	char *next, *tmp, *buffer;
 	int is_var, i;
-	shvars shvars = {0, 0, NULL};
+	shvars shvars = {0, 0};
+
+	extern char *_shellname;
 
 	while (*ptr != '\0')
 	{
@@ -187,7 +191,7 @@ char *_checkvars(char *arg)
 			if (_strcmp("$?", ptr, MATCH) == TRUE)
 				tmp = _itoa(shvars.status);
 			else if (_strcmp("$0", ptr, MATCH) == TRUE)
-				tmp = _strdup(shvars._shellname);
+				tmp = _strdup(_shellname);
 			else if (_strcmp("$$", ptr, MATCH) == TRUE)
 				tmp = _itoa(getpid());
 			else if (_getarrelement(environ, ptr + 1) != NULL)

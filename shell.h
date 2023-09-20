@@ -39,17 +39,18 @@ typedef struct Alias
  * struct Shvars - global variables for shell
  * @status: status
  * @line_num: line number
- * @_shellname: shell name
  */
 typedef struct Shvars
 {
 	int status;
 	int line_num;
-	char *_shellname;
 } shvars;
 
 extern char **environ;
+char *_shellname;
 
+void _setshellname(char **argv);
+char *_getshellname(void);
 void _mainloop(void);
 
 int _cmdmanager(char **args);

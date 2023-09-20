@@ -9,9 +9,9 @@
  */
 int main(__attribute__((unused))int argc, char **argv)
 {
-	shvars shvars = {0, 0, NULL};
+	shvars shvars = {0, 0};
+	_shellname = _strdup(*argv);
 
-	shvars._shellname = _strdup(*argv);
 	environ = _arrcpy(environ, _listlen(environ, NULL));
 
 	signal(SIGINT, SIG_IGN);
@@ -19,7 +19,7 @@ int main(__attribute__((unused))int argc, char **argv)
 	_aliasfunc(NULL, TRUE);
 
 	_freearr(environ);
-	free(shvars._shellname);
+	free(_shellname);
 
 	return (shvars.status);
 }
