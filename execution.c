@@ -250,15 +250,18 @@ int _execmd(char **args)
 		cmd_name = _checkcmd(args);
 		if (cmd_name == NULL)
 			return (FALSE);
-		pid = fork();
-		if (pid == 0)
+		else
 		{
-			execve(cmd_name, args, environ);
-			perror("Error: ");
-		}
-		else if (pid < 0)
-		{
-			perror("Error: ");
+			pid = fork();
+			if (pid == 0)
+			{
+				execve(cmd_name, args, environ);
+				perror("Error: ");
+			}
+			else if (pid < 0)
+			{
+				perror("Error: ");
+			}
 		}
 		wait(&shvars.status);
 		free(cmd_name);
