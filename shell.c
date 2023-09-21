@@ -22,5 +22,5 @@ int main(__attribute__((unused))int argc, char **argv)
 	_freearr(environ);
 	free(_shellname);
 
-	return (status);
+	return (status % 256);
 }
