@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * assign_lineptr - Reassigns the lineptr variable for _getline.
+ * _assignlineptr - Reassigns the lineptr variable for _getline.
  * @lineptr: A buffer to store an input string.
  * @n: The size of lineptr.
  * @buffer: The string to assign to lineptr.
